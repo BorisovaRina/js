@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тема 2: Переменные и типы данных</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 12px; padding: 40px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); }
+        h1 { color: #333; margin-bottom: 10px; font-size: 2.5em; }
+        .subtitle { color: #666; font-size: 1.1em; margin-bottom: 30px; border-bottom: 3px solid #f5576c; padding-bottom: 15px; }
+        #result { background: #f8f9fa; border-left: 4px solid #f5576c; padding: 20px; margin-top: 20px; border-radius: 6px; font-family: monospace; max-height: 400px; overflow-y: auto; }
+        .task { background: #fff0f3; padding: 15px; margin: 10px 0; border-radius: 6px; border-left: 3px solid #f5576c; }
+        button { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; padding: 12px 30px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: transform 0.2s; margin-top: 20px; }
+        button:hover { transform: translateY(-2px); }
+        .info { background: #f0f8ff; padding: 15px; border-radius: 6px; margin-bottom: 20px; border-left: 4px solid #f5576c; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Тема 2: Переменные и типы данных</h1>
+        <div class="subtitle"></div>
+        <div class="info">
+            <strong>Информация:</strong> Откройте консоль разработчика (F12) чтобы увидеть результаты.
+        </div>
+        <div class="task"><strong>Задания:</strong> var, let, const, преобразование типов, проверка типов и многое другое</div>
+        <button onclick="runAllTasks()">Запустить все задания</button>
+        <div id="result"><p>Результаты выполнения появятся здесь...</p></div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        function runAllTasks() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p><strong>Выполняю все задания...</strong></p>';
+            console.clear();
+            for (let i = 1; i <= 16; i++) {
+                const func = window[`task${i}`];
+                if (func) {
+                    try {
+                        const result = func();
+                        console.log(`Task ${i}:`, result);
+                        resultDiv.innerHTML += `<p>Task ${i}: ${JSON.stringify(result)}</p>`;
+                    } catch (error) {
+                        console.error(`Task ${i}:`, error.message);
+                        resultDiv.innerHTML += `<p>Task ${i}: ${error.message}</p>`;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

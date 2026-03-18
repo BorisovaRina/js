@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тема 6: Функции</title>
+    <style>* { margin: 0; padding: 0; box-sizing: border-box; } body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); min-height: 100vh; padding: 20px; } .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 12px; padding: 40px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); } h1 { color: #333; font-size: 2.5em; } .subtitle { color: #666; margin-bottom: 30px; border-bottom: 3px solid #30cfd0; padding-bottom: 15px; } button { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); color: white; border: none; padding: 12px 30px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 20px; } #result { background: #f8f9fa; border-left: 4px solid #30cfd0; padding: 20px; margin-top: 20px; border-radius: 6px; font-family: monospace; max-height: 400px; overflow-y: auto; }</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Тема 6: Функции</h1>
+        <div class="subtitle"></div>
+        <button onclick="runAllTasks()">Запустить все задания</button>
+        <div id="result"><p>Результаты...</p></div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        function runAllTasks() {
+            document.getElementById('result').innerHTML = '<p>Выполняю...</p>';
+            for (let i = 1; i <= 15; i++) {
+                const func = window[`task${i}`];
+                if (func) {
+                    try {
+                        const result = func();
+                        document.getElementById('result').innerHTML += `<p>${i}: ${JSON.stringify(result)}</p>`;
+                    } catch (e) {
+                        document.getElementById('result').innerHTML += `<p>${i}: ${e.message}</p>`;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тема 13: Классы и ООП</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        h1 { color: #333; font-size: 2.5em; margin-bottom: 10px; }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #38f9d7;
+            padding-bottom: 15px;
+        }
+        button {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        button:hover { transform: translateY(-2px); }
+        #result {
+            background: #f8f9fa;
+            border-left: 4px solid #38f9d7;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 6px;
+            font-family: monospace;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .info {
+            background: #e8fff3;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #43e97b;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Тема 13: Классы и ООП</h1>
+        <div class="subtitle"></div>
+
+        <div class="info">
+            Результаты заданий будут показаны ниже и в консоли. Классы объявлены в файле <code>13-classes.js</code>.
+        </div>
+
+        <button onclick="runAllTasks()">Запустить все задания</button>
+        <div id="result"><p>Результаты...</p></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function runAllTasks() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p><strong>Выполняю задания...</strong></p>';
+            console.clear();
+
+            for (let i = 1; i <= 15; i++) {
+                const func = window[`task${i}`];
+                if (!func) continue;
+
+                try {
+                    const value = func();
+                    console.log(`Task ${i}:`, value);
+                    resultDiv.innerHTML += `<p>${i}: ${JSON.stringify(value)}</p>`;
+                } catch (e) {
+                    console.error(`Task ${i} error:`, e);
+                    resultDiv.innerHTML += `<p>${i}: ${e.message}</p>`;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
