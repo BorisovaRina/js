@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100 JavaScript Заданий - Полные Решения</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+            text-align: center;
+        }
+        
+        .info {
+            background: #e8f4f8;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        button.secondary {
+            background: #6c757d;
+        }
+        
+        button.secondary:hover {
+            background: #5a6268;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background: #f0f0f0;
+            color: #333;
+            border: 2px solid #ddd;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .filter-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+        
+        .filter-btn.active:hover {
+            background: #764ba2;
+        }
+        
+        .progress {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .progress-text {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 8px;
+        }
+        
+        #result {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            max-height: 500px;
+            overflow-y: auto;
+            line-height: 1.6;
+        }
+        
+        .task-item {
+            padding: 10px;
+            margin: 8px 0;
+            background: white;
+            border-left: 3px solid #667eea;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .task-item:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .task-num {
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .task-success {
+            color: #28a745;
+        }
+        
+        .task-error {
+            color: #dc3545;
+        }
+        
+        .category-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            margin: 15px 0 10px 0;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>100 JavaScript Заданий</h1>
+        <div class="subtitle">Полные решения всех 100 заданий с категоризацией и тестированием</div>
+        
+        <div class="info">
+            ℹНажимайте кнопки ниже для запуска тестов. Результаты выполнения отобразятся в разделе "Результаты".
+            Откройте консоль (F12) для более подробной информации.
+        </div>
+        
+        <div class="progress">
+            <strong>Прогресс выполнения:</strong>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text">
+                Выполнено: <span id="completedCount">0</span> / 100
+            </div>
+        </div>
+        
+        <div class="stats" id="stats"></div>
+        
+        <div class="controls">
+            <button onclick="runAllTasks()">▶Запустить все задания</button>
+            <button class="secondary" onclick="clearResults()">Очистить результаты</button>
+            <button class="secondary" onclick="copyResults()">Копировать результаты</button>
+        </div>
+        
+        <div class="filters">
+            <span style="align-self: center; margin-right: 10px; font-weight: bold;">Фильтр по категориям:</span>
+            <button class="filter-btn active" onclick="filterCategory('all')">Все (100)</button>
+            <button class="filter-btn" onclick="filterCategory(1)">Вычисления (10)</button>
+            <button class="filter-btn" onclick="filterCategory(2)">Строки (20)</button>
+            <button class="filter-btn" onclick="filterCategory(3)">Массивы (20)</button>
+            <button class="filter-btn" onclick="filterCategory(4)">Объекты (20)</button>
+            <button class="filter-btn" onclick="filterCategory(5)">Логика (20)</button>
+            <button class="filter-btn" onclick="filterCategory(6)">Циклы (20)</button>
+            <button class="filter-btn" onclick="filterCategory(7)">Функции (20)</button>
+            <button class="filter-btn" onclick="filterCategory(8)">Доп. (20)</button>
+        </div>
+        
+        <div id="result">
+            <p>Результаты выполнения появятся здесь...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        const categories = {
+            1: { name: 'Базовые вычисления', range: [1, 10] },
+            2: { name: 'Строки', range: [11, 30] },
+            3: { name: 'Массивы', range: [31, 50] },
+            4: { name: 'Объекты', range: [51, 70] },
+            5: { name: 'Логика', range: [71, 85] },
+            6: { name: 'Циклы', range: [86, 100] },
+            7: { name: 'Функции', range: [61, 80] },
+            8: { name: 'Дополнительные', range: [81, 100] }
+        };
+
+        let currentFilter = 'all';
+        let results = {};
+
+        function runAllTasks() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p><strong>Выполняю все задания...</strong></p>';
+            console.clear();
+            console.log('=== Запуск100 заданий ===');
+            
+            results = {};
+            let completedCount = 0;
+
+            for (let i = 1; i <= 100; i++) {
+                const func = window[`task${i}`];
+                if (!func) continue;
+
+                try {
+                    let result;
+                    
+                    // Примеры параметров для разных заданий
+                    if (i === 1) result = func(5, 3);
+                    else if (i === 2) result = func(10, 3);
+                    else if (i === 3) result = func(6, 7);
+                    else if (i === 4) result = func(20, 4);
+                    else if (i === 5) result = func(17, 5);
+                    else if (i === 6) result = func(2, 8);
+                    else if (i === 7) result = func(-42);
+                    else if (i === 8) result = func(16);
+                    else if (i === 9) result = func(4.2);
+                    else if (i === 10) result = func(4.8);
+                    else if (i === 11) result = func('hello');
+                    else if (i === 12) result = func('hello');
+                    else if (i === 13) result = func('HELLO');
+                    else if (i === 14) result = func('hello', 1);
+                    else if (i === 15) result = func('hello', 0, 3);
+                    else if (i === 16) result = func('hello world', 'world');
+                    else if (i === 17) result = func('hello', 'h', 'H');
+                    else if (i === 18) result = func('a,b,c', ',');
+                    else if (i === 19) result = func(['a','b','c'], '-');
+                    else if (i === 20) result = func('hello', 'ell');
+                    else if (i === 21) result = func([1,2,3,4,5]);
+                    else if (i === 22) result = func([10,20,30], 1);
+                    else if (i === 23) result = func([1,2], 3);
+                    else if (i === 24) result = func([1,2,3]);
+                    else if (i === 25) result = func([2,3], 1);
+                    else if (i === 26) result = func([1,2,3]);
+                    else if (i === 27) result = func([10,20,30], 20);
+                    else if (i === 28) result = func([1,2,3], 2);
+                    else if (i === 29) result = func([1,2,3,4,5], 1, 4);
+                    else if (i === 30) result = func([1,2,3], 1, 1, 99);
+                    else if (i === 31) result = func();
+                    else if (i === 32) result = func({name: 'John'}, 'name');
+                    else if (i === 33) result = func({}, 'name', 'Jane');
+                    else if (i === 34) result = func({name: 'John', age: 30}, 'age');
+                    else if (i === 35) result = func({a:1, b:2});
+                    else if (i === 36) result = func({a:1, b:2});
+                    else if (i === 37) result = func({a:1, b:2});
+                    else if (i === 38) result = func({name: 'John'}, 'name');
+                    else if (i === 39) result = func({a:1}, {b:2});
+                    else if (i === 40) result = func({name: 'John', age: 30});
+                    else if (i === 41) result = func(10);
+                    else if (i === 42) result = func(5, 3);
+                    else if (i === 43) result = func(4);
+                    else if (i === 44) result = func(7);
+                    else if (i === 45) result = func(true, false);
+                    else if (i === 46) result = func(true, false);
+                    else if (i === 47) result = func(true);
+                    else if (i === 48) result = func(-5);
+                    else if (i === 49) result = func(5, 1, 10);
+                    else if (i === 50) result = func(1);
+                    else if (i === 51) result = func(5);
+                    else if (i === 52) result = func([1,2,3]);
+                    else if (i === 53) result = func(5);
+                    else if (i === 54) result = func();
+                    else if (i === 55) result = func([1,2,3,4,5]);
+                    else if (i === 56) result = func([1,2,3]);
+                    else if (i === 57) result = func([1,2,3,4,5]);
+                    else if (i === 58) result = func([1,2,3,4,5]);
+                    else if (i === 59) result = func([10,20,30], 20);
+                    else if (i === 60) result = func([1,2,3,4,5]);
+                    else if (i === 61) result = func(5);
+                    else if (i === 62) result = func(1, 2, 3);
+                    else if (i === 63) result = func();
+                    else if (i === 64) result = func();
+                    else if (i === 65) result = func(1, 2, 3, 4, 5);
+                    else if (i === 66) result = func(5, 10);
+                    else if (i === 67) result = func('John', 30);
+                    else if (i === 68) result = func(10);
+                    else if (i === 69) result = func(5);
+                    else if (i === 70) result = func(x => x * 2, 5);
+                    else if (i === 71) result = func(42);
+                    else if (i === 72) result = func([1,2,3]);
+                    else if (i === 73) result = func(null);
+                    else if (i === 74) result = func(undefined);
+                    else if (i === 75) result = func([]);
+                    else if (i === 76) result = func('42');
+                    else if (i === 77) result = func(42);
+                    else if (i === 78) result = func(1);
+                    else if (i === 79) result = func('42px');
+                    else if (i === 80) result = func('3.14');
+                    else if (i === 81) result = func('hello');
+                    else if (i === 82) result = func(42);
+                    else if (i === 83) result = func([5,2,8,1]);
+                    else if (i === 84) result = func([5,2,8,1]);
+                    else if (i === 85) result = func();
+                    else if (i === 86) result = func('hello');
+                    else if (i === 87) result = func([1,2,3]);
+                    else if (i === 88) result = func();
+                    else if (i === 89) result = func();
+                    else if (i === 90) result = func();
+                    else if (i === 91) result = func('Hello', ' World');
+                    else if (i === 92) result = func('John');
+                    else if (i === 93) result = func('42');
+                    else if (i === 94) result = func('42');
+                    else if (i === 95) result = func('a', 3);
+                    else if (i === 96) result = func([3,1,4,1,5]);
+                    else if (i === 97) result = func([1,2,3]);
+                    else if (i === 98) result = func([1,2,3]);
+                    else if (i === 99) result = func([[1,2],[3,4]]);
+                    else if (i === 100) result = func([1,2,3]);
+                    else result = func();
+
+                    results[i] = { success: true, result };
+                    completedCount++;
+                    console.log(`Task ${i}:`, result);
+                } catch (e) {
+                    results[i] = { success: false, error: e.message };
+                    console.error(`Task ${i}:`, e.message);
+                }
+            }
+
+            displayResults();
+            updateStats(completedCount);
+            updateProgress(completedCount);
+        }
+
+        function displayResults() {
+            const resultDiv = document.getElementById('result');
+            let html = '';
+            let currentCategory = 0;
+
+            for (let i = 1; i <= 100; i++) {
+                if (!results[i]) continue;
+
+                // Определить категорию
+                let category = 1;
+                if (i <= 10) category = 1;
+                else if (i <= 30) category = 2;
+                else if (i <= 50) category = 3;
+                else if (i <= 70) category = 4;
+                else if (i <= 85) category = 5;
+                else if (i <= 100) category = 6;
+
+                if (category !== currentCategory) {
+                    currentCategory = category;
+                    html += `<div class="category-header">📑 ${categories[category].name}</div>`;
+                }
+
+                const res = results[i];
+                const resultStr = res.success ? JSON.stringify(res.result) : `Ошибка: ${res.error}`;
+                const className = res.success ? 'task-success' : 'task-error';
+                
+                html += `<div class="task-item ${className}">
+                    <span class="task-num">Задание ${i}:</span> ${resultStr}
+                </div>`;
+            }
+
+            resultDiv.innerHTML = html || '<p>Нет результатов для отображения</p>';
+        }
+
+        function updateStats(completed) {
+            const successCount = Object.values(results).filter(r => r.success).length;
+            const errorCount = Object.values(results).filter(r => !r.success).length;
+            
+            document.getElementById('stats').innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${Object.keys(results).length}</div>
+                    <div class="stat-label">Выполнено</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${successCount}</div>
+                    <div class="stat-label">Успешных</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${errorCount}</div>
+                    <div class="stat-label">Ошибок</div>
+                </div>
+            `;
+        }
+
+        function updateProgress(completed) {
+            const percentage = (completed / 100) * 100;
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('completedCount').textContent = completed;
+        }
+
+        function clearResults() {
+            results = {};
+            document.getElementById('result').innerHTML = '<p>Результаты очищены. Нажмите "Запустить все задания".</p>';
+            document.getElementById('stats').innerHTML = '';
+            document.getElementById('progressFill').style.width = '0%';
+            document.getElementById('completedCount').textContent = '0';
+        }
+
+        function copyResults() {
+            let text = '';
+            for (let i = 1; i <= 100; i++) {
+                if (results[i]) {
+                    const res = results[i];
+                    text += `Task ${i}: ${res.success ? JSON.stringify(res.result) : 'Error: ' + res.error}\n`;
+                }
+            }
+            navigator.clipboard.writeText(text);
+            alert('Результаты скопированы в буфер обмена!');
+        }
+
+        function filterCategory(cat) {
+            currentFilter = cat;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            displayResults();
+        }
+    </script>
+</body>
+</html>
