@@ -265,7 +265,7 @@
         <div class="stats" id="stats"></div>
         
         <div class="controls">
-            <button onclick="runAllTasks()">▶Запустить все задания</button>
+            <button onclick="runAllTasks()">Запустить все задания</button>
             <button class="secondary" onclick="clearResults()">Очистить результаты</button>
             <button class="secondary" onclick="copyResults()">Копировать результаты</button>
         </div>
@@ -456,7 +456,7 @@
 
                 if (category !== currentCategory) {
                     currentCategory = category;
-                    html += `<div class="category-header">📑 ${categories[category].name}</div>`;
+                    html += `<div class="category-header">${categories[category].name}</div>`;
                 }
 
                 const res = results[i];
